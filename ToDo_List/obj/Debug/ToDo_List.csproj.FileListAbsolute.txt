@@ -1,0 +1,12 @@
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\bin\Debug\ToDo_List.exe.config
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\bin\Debug\ToDo_List.exe
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\bin\Debug\ToDo_List.pdb
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.Properties.Resources.resources
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.csproj.GenerateResource.cache
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.csproj.CoreCompileInputs.cache
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.exe
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.pdb
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.csprojAssemblyReference.cache
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.MainForm.resources
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.frmaddedittask.resources
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.uctaskview.resources
