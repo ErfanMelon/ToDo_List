@@ -81,23 +81,28 @@ namespace ToDo_List
 
         private void btnremovetask_Click(object sender, EventArgs e)
         {
+           
             if (MessageBox.Show($"{task.TaskName} میخواهید این مورد را حذف کنید؟","هشدار",MessageBoxButtons.YesNo,MessageBoxIcon.Warning)==DialogResult.Yes)
             {
+                ninotif.Visible = true;
+                ninotif.BalloonTipTitle = "حذف";
+
                 if (c.DeleteTask(task.TaskID))
                 {
-                    ninotif.BalloonTipTitle = "Delete";
                     ninotif.BalloonTipText = "با موفقیت حذف شد !";
-                    
                     mainForm.UpdateList();
                 }
                 else
                 {
-                    ninotif.BalloonTipTitle = "Delete";
                     ninotif.BalloonTipText = "خطا در حذف";
                 }
                 ninotif.ShowBalloonTip(3000);
-                ninotif.Dispose();
             }
+        }
+
+        private void ninotif_BalloonTipClosed(object sender, EventArgs e)
+        {
+            ninotif.Visible = false;
         }
     }
 }

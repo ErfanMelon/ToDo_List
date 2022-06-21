@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ToDo_List.Properties;
 using ToDo_List.WorkWithDatabase;
 
 namespace ToDo_List
@@ -31,10 +32,12 @@ namespace ToDo_List
                 case Mode.Add:
                     this.Text = "افزودن";
                     btnadd.Text = "افزودن";
+                    this.Icon = Resources.addnote;
                     break;
                 case Mode.Edit:
                     this.Text = "ویرایش";
                     btnadd.Text = "ویرایش";
+                    this.Icon = Resources.editicon;
                     task = c.FindTaskByID(taskid);
                     txttaskname.Text = task.TaskName;
                     txtdetail.Text = task.TaskDetail;
@@ -49,26 +52,24 @@ namespace ToDo_List
         {
             if (txttaskname.Text.Trim() != "")
             {
+                nishowresult.Visible = true;
                 switch (mod)
                 {
                     case Mode.Add:
-
+                        nishowresult.Icon = Resources.addnote;
                         bool addtask = c.AddTask(new WorkWithDatabase.Task() { TaskName = txttaskname.Text.Trim(), TaskState = cbstate.Checked, TaskDetail = txtdetail.Text.Trim() });
-                        nishowresult.Text = "افزودن کا جدید";
                         if (addtask)
                         {
                             nishowresult.BalloonTipText = "عملیات با موفقیت انجام شد";
                         }
                         else
                         {
+                            nishowresult.BalloonTipIcon = ToolTipIcon.Error;
                             nishowresult.BalloonTipText = "عملیات با خطا مواجه شد !";
                         }
-                        nishowresult.ShowBalloonTip(3000);
-                        DialogResult = DialogResult.OK;
-                        nishowresult.Dispose();
                         break;
                     case Mode.Edit:
-
+                        nishowresult.Icon = Resources.editicon;
                         bool edittask = c.EditTask(new WorkWithDatabase.Task() { TaskID = task.TaskID, TaskDetail = txtdetail.Text.Trim(), TaskName = txttaskname.Text.Trim(), TaskState = cbstate.Checked });
                         if (edittask)
                         {
@@ -76,15 +77,15 @@ namespace ToDo_List
                         }
                         else
                         {
+                            nishowresult.BalloonTipIcon = ToolTipIcon.Error;
                             nishowresult.BalloonTipText = "عملیات با خطا مواجه شد !";
                         }
-                        nishowresult.ShowBalloonTip(3000);
-                        DialogResult = DialogResult.OK;
-                        nishowresult.Dispose();
                         break;
                     default:
                         break;
                 }
+                nishowresult.ShowBalloonTip(3000);
+                DialogResult = DialogResult.OK;
             }
             else
             {
@@ -92,5 +93,14 @@ namespace ToDo_List
             }
         }
 
+        private void frmaddedittask_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nishowresult_BalloonTipClosed(object sender, EventArgs e)
+        {
+            nishowresult.Visible = false;
+        }
     }
 }

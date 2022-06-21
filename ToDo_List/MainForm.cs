@@ -25,7 +25,7 @@ namespace ToDo_List
         private void btnaddnewtask_Click(object sender, EventArgs e)
         {
             frmaddedittask frmaddedittask = new frmaddedittask(frmaddedittask.Mode.Add);
-            if(frmaddedittask.ShowDialog()==DialogResult.OK)
+            if (frmaddedittask.ShowDialog() == DialogResult.OK)
             {
                 this.UpdateList();
             }
@@ -37,14 +37,14 @@ namespace ToDo_List
             pltasks.Controls.Clear();
             foreach (var task in c.All_Tasks())
             {
-                uctaskview uctaskview = new uctaskview(task.TaskID,this);
+                uctaskview uctaskview = new uctaskview(task.TaskID, this);
                 pltasks.Controls.Add(uctaskview);
                 uctaskview.Dock = DockStyle.Top;
             }
         }
         public void UpdateList()
         {
-            if(currentbutton!=new Button())
+            if (currentbutton != new Button())
                 currentbutton.PerformClick();
         }
 
@@ -77,6 +77,39 @@ namespace ToDo_List
         }
 
         private void btnalltasks_ContextMenuStripChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btndeletedb_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("آیا از حذف همه اطلاعات مظمئن هستید ؟", "توجه", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                nideletedbmessege.Visible = true;
+                nideletedbmessege.BalloonTipTitle = "حذف داده ها";
+                if (c.RemoveDB())
+                {
+                    nideletedbmessege.BalloonTipText = "تمامی داده ها پاک شد";
+                }
+                else
+                {
+                    nideletedbmessege.BalloonTipText = "خطایی رخ داد ";
+                }
+                nideletedbmessege.ShowBalloonTip(3000);
+            }
+        }
+
+        private void nideletedbmessege_BalloonTipClosed(object sender, EventArgs e)
+        {
+            nideletedbmessege.Visible = false;
+        }
+
+        private void btnsetting_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

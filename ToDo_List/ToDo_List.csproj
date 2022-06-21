@@ -82,6 +82,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="uctaskview.resx">
       <DependentUpon>uctaskview.cs</DependentUpon>
@@ -98,6 +99,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addnote.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AddNewTask.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settingicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\setting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

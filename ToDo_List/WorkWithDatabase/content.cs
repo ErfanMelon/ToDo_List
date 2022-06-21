@@ -291,7 +291,14 @@ namespace ToDo_List.WorkWithDatabase
             try
             {
                 if (Directory.Exists(dbpaths[0]))
+                {
+                    foreach (string file in Directory.GetFiles(dbpaths[0]))
+                    {
+                        File.Delete(file);
+                    }
                     Directory.Delete(dbpaths[0]);
+                }
+                    
                 return true;
             }
             catch

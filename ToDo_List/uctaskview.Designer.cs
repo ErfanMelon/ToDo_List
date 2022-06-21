@@ -108,13 +108,14 @@
             // ninotif
             // 
             this.ninotif.Icon = ((System.Drawing.Icon)(resources.GetObject("ninotif.Icon")));
-            this.ninotif.Text = "notifyIcon1";
-            this.ninotif.Visible = true;
+            this.ninotif.Text = "حذف";
+            this.ninotif.BalloonTipClosed += new System.EventHandler(this.ninotif_BalloonTipClosed);
             // 
             // uctaskview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.ContextMenuStrip = this.cmsrightclick;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cbtasknameandstate);

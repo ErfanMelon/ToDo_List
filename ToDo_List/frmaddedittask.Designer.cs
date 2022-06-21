@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmaddedittask));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtdetail = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbstate = new System.Windows.Forms.CheckBox();
             this.txttaskname = new System.Windows.Forms.TextBox();
-            this.txtdetail = new System.Windows.Forms.RichTextBox();
             this.btnadd = new System.Windows.Forms.Button();
             this.nishowresult = new System.Windows.Forms.NotifyIcon(this.components);
             this.groupBox1.SuspendLayout();
@@ -49,6 +49,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "توضیحات";
+            // 
+            // txtdetail
+            // 
+            this.txtdetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtdetail.Location = new System.Drawing.Point(3, 16);
+            this.txtdetail.Name = "txtdetail";
+            this.txtdetail.Size = new System.Drawing.Size(382, 120);
+            this.txtdetail.TabIndex = 0;
+            this.txtdetail.Text = "";
             // 
             // label1
             // 
@@ -77,15 +86,6 @@
             this.txttaskname.TabIndex = 3;
             this.txttaskname.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtdetail
-            // 
-            this.txtdetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtdetail.Location = new System.Drawing.Point(3, 16);
-            this.txtdetail.Name = "txtdetail";
-            this.txtdetail.Size = new System.Drawing.Size(382, 120);
-            this.txtdetail.TabIndex = 0;
-            this.txtdetail.Text = "";
-            // 
             // btnadd
             // 
             this.btnadd.Location = new System.Drawing.Point(15, 16);
@@ -98,9 +98,10 @@
             // 
             // nishowresult
             // 
+            this.nishowresult.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.nishowresult.Icon = ((System.Drawing.Icon)(resources.GetObject("nishowresult.Icon")));
             this.nishowresult.Text = "متن پیام";
-            this.nishowresult.Visible = true;
+            this.nishowresult.BalloonTipClosed += new System.EventHandler(this.nishowresult_BalloonTipClosed);
             // 
             // frmaddedittask
             // 
@@ -112,9 +113,11 @@
             this.Controls.Add(this.cbstate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmaddedittask";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.Text = "افزودن";
+            this.Load += new System.EventHandler(this.frmaddedittask_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
