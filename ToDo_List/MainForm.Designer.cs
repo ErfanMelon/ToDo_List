@@ -35,12 +35,12 @@
             this.btnsetting = new System.Windows.Forms.ToolStripDropDownButton();
             this.btndeletedb = new System.Windows.Forms.ToolStripMenuItem();
             this.gbcategories = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btndidnt = new System.Windows.Forms.Button();
             this.btndone = new System.Windows.Forms.Button();
             this.btnalltasks = new System.Windows.Forms.Button();
             this.pltasks = new System.Windows.Forms.Panel();
             this.nideletedbmessege = new System.Windows.Forms.NotifyIcon(this.components);
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolStrip1.SuspendLayout();
             this.gbcategories.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -100,6 +100,17 @@
             this.gbcategories.TabStop = false;
             this.gbcategories.Text = "دسته بندی ها";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(22, 18);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(48, 49);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // btndidnt
             // 
             this.btndidnt.Location = new System.Drawing.Point(250, 29);
@@ -147,17 +158,6 @@
             this.nideletedbmessege.Text = "Delete";
             this.nideletedbmessege.BalloonTipClosed += new System.EventHandler(this.nideletedbmessege_BalloonTipClosed);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(22, 18);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 49);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -169,6 +169,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "مدیریت انجام کارها";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
