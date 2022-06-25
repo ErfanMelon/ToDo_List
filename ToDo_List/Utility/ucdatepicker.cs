@@ -316,6 +316,8 @@ namespace ToDo_List.Utility
             #region DefaultValues
             txtyear.Value = _shamsidate.GetYear(DateTime.Now);
             cbmonth.SelectedIndex = _shamsidate.GetMonth(DateTime.Now) - 1;
+            day = _shamsidate.GetDayOfMonth(DateTime.Now);
+            lbldate.Text = $"{year}/{month}/{day}";
             #endregion
 
         }
@@ -454,6 +456,13 @@ namespace ToDo_List.Utility
         {
             Date = _shamsidate.ToDateTime(year, month, day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
             btndhowhide.PerformClick();
+        }
+        public void Showdate(DateTime dateTime)
+        {
+            year = _shamsidate.GetYear(dateTime);
+            month = _shamsidate.GetMonth(dateTime);
+            day = _shamsidate.GetDayOfMonth(dateTime);
+            lbldate.Text = $"{year}/{month}/{day}";
         }
     }
 }

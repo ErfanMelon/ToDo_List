@@ -30,6 +30,10 @@ namespace ToDo_List
             {
                 lbdescription.Text = "";
             }
+            if (task.TaskReminder != DateTime.MinValue)
+                lblreminder.Text = "⌛";
+            else
+                lblreminder.Text = "";
         }
 
         private void cbtasknameandstate_CheckedChanged(object sender, EventArgs e)

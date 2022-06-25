@@ -14,3 +14,6 @@ C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.Form1.resour
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.Utility.customLabel.resources
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.Utility.ucdatepicker.resources
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.csprojAssemblyReference.cache
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\Interop.TaskScheduler.dll
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.csproj.ResolveComReference.cache
+C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.g.resources

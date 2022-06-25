@@ -38,6 +38,7 @@
             this.btnremovetask = new System.Windows.Forms.ToolStripMenuItem();
             this.btnedittask = new System.Windows.Forms.ToolStripMenuItem();
             this.ninotif = new System.Windows.Forms.NotifyIcon(this.components);
+            this.lblreminder = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.cmsrightclick.SuspendLayout();
             this.SuspendLayout();
@@ -57,6 +58,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblreminder);
             this.panel1.Controls.Add(this.lbdescription);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 44);
@@ -111,6 +113,16 @@
             this.ninotif.Text = "حذف";
             this.ninotif.BalloonTipClosed += new System.EventHandler(this.ninotif_BalloonTipClosed);
             // 
+            // lblreminder
+            // 
+            this.lblreminder.AutoSize = true;
+            this.lblreminder.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblreminder.Location = new System.Drawing.Point(221, 0);
+            this.lblreminder.Name = "lblreminder";
+            this.lblreminder.Size = new System.Drawing.Size(36, 13);
+            this.lblreminder.TabIndex = 2;
+            this.lblreminder.Text = "هشدار";
+            // 
             // uctaskview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,5 +153,6 @@
         private System.Windows.Forms.ToolStripMenuItem btnremovetask;
         private System.Windows.Forms.ToolStripMenuItem btnedittask;
         private System.Windows.Forms.NotifyIcon ninotif;
+        private System.Windows.Forms.Label lblreminder;
     }
 }

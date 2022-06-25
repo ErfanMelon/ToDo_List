@@ -17,6 +17,7 @@ namespace ToDo_List.WorkWithDatabase
         bool DeleteTask(int taskid);
         List<Task> All_Tasks();
         Task FindTaskByID(int taskid);
+        bool DeleteReminder(int taskid);
     }
     struct Task
     {
@@ -24,5 +25,6 @@ namespace ToDo_List.WorkWithDatabase
         public string TaskName { get; set; }
         public string TaskDetail { get; set; }
         public bool TaskState { get; set; }
+        public DateTime TaskReminder { get; set; }
     }
 }

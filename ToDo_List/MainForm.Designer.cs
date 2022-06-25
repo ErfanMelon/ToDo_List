@@ -41,6 +41,7 @@
             this.btnalltasks = new System.Windows.Forms.Button();
             this.pltasks = new System.Windows.Forms.Panel();
             this.nideletedbmessege = new System.Windows.Forms.NotifyIcon(this.components);
+            this.btndebug = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.gbcategories.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -70,7 +71,8 @@
             // btnsetting
             // 
             this.btnsetting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btndeletedb});
+            this.btndeletedb,
+            this.btndebug});
             this.btnsetting.Image = global::ToDo_List.Properties.Resources.setting;
             this.btnsetting.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnsetting.Name = "btnsetting";
@@ -82,7 +84,7 @@
             // btndeletedb
             // 
             this.btndeletedb.Name = "btndeletedb";
-            this.btndeletedb.Size = new System.Drawing.Size(137, 22);
+            this.btndeletedb.Size = new System.Drawing.Size(180, 22);
             this.btndeletedb.Text = "حذف داده ها";
             this.btndeletedb.Click += new System.EventHandler(this.btndeletedb_Click);
             // 
@@ -158,6 +160,13 @@
             this.nideletedbmessege.Text = "Delete";
             this.nideletedbmessege.BalloonTipClosed += new System.EventHandler(this.nideletedbmessege_BalloonTipClosed);
             // 
+            // btndebug
+            // 
+            this.btndebug.Name = "btndebug";
+            this.btndebug.Size = new System.Drawing.Size(180, 22);
+            this.btndebug.Text = "رفع خطا";
+            this.btndebug.Click += new System.EventHandler(this.btndebug_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -171,6 +180,7 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "مدیریت انجام کارها";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.gbcategories.ResumeLayout(false);
@@ -193,5 +203,6 @@
         private System.Windows.Forms.ToolStripMenuItem btndeletedb;
         private System.Windows.Forms.NotifyIcon nideletedbmessege;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem btndebug;
     }
 }

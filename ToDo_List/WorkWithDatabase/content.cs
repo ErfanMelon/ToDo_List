@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ToDo_List.Utility;
 
 namespace ToDo_List.WorkWithDatabase
 {
@@ -14,9 +15,10 @@ namespace ToDo_List.WorkWithDatabase
         public content()
         {
             dbpaths = new List<string>() { $"{Application.StartupPath}\\DataBase" };
-            dbpaths.Add($"{dbpaths[0]}\\TNames");
-            dbpaths.Add($"{dbpaths[0]}\\TDetails");
-            dbpaths.Add($"{dbpaths[0]}\\TState");
+            dbpaths.Add($"{dbpaths[0]}\\TNames");//1
+            dbpaths.Add($"{dbpaths[0]}\\TDetails");//2
+            dbpaths.Add($"{dbpaths[0]}\\TState");//3
+            dbpaths.Add($"{dbpaths[0]}\\TReminder");//4
             CreateDB();
         }
         public bool AddTask(Task task)
@@ -34,10 +36,12 @@ namespace ToDo_List.WorkWithDatabase
              * [TNames] TaskID#TaskName
              * [TDetails] TaskID#TaskDetail
              * [TState] TaskID#TaskState
+             * [TReminder] TaskID#TaskReminder
             */
             try
             {
-                task.TaskID = int.Parse(File.ReadAllText(dbpaths[0] + "\\id"));
+                task.TaskID = int.Parse(File.ReadAllText(dbpaths[0] + "\\id"));//read unused id from db
+                File.WriteAllText(dbpaths[0] + "\\id", (task.TaskID + 1).ToString());//change unused id [increase by 1]
                 #region InsertName
                 if (filesizes[0].Length == 0)
                 {
@@ -72,11 +76,28 @@ namespace ToDo_List.WorkWithDatabase
                 }
                 #endregion
 
-                File.WriteAllText(dbpaths[0] + "\\id", (task.TaskID + 1).ToString());
+                #region InsertReminder
+                if (task.TaskReminder != DateTime.MinValue)
+                {
+                    if (filesizes[3].Length == 0)
+                    {
+                        File.WriteAllText(filesizes[3].FullName, $"{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
+                    }
+                    else
+                    {
+                        File.AppendAllText(filesizes[3].FullName, $"\n{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
+                    }
+
+                    #endregion
+
+
+                    
+                }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -94,6 +115,7 @@ namespace ToDo_List.WorkWithDatabase
                 Dictionary<int, string> tasknames = new Dictionary<int, string>();
                 Dictionary<int, string> taskdetail = new Dictionary<int, string>();
                 Dictionary<int, bool> taskstate = new Dictionary<int, bool>();
+                Dictionary<int, DateTime> taskreminder = new Dictionary<int, DateTime>();
 
                 List<string> file;
                 int key;
@@ -131,6 +153,16 @@ namespace ToDo_List.WorkWithDatabase
                 }
                 #endregion
 
+                #region ReadReminders
+                file = File.ReadAllLines(dbpaths[4]).ToList();
+                foreach (string data in file)
+                {
+                    key = int.Parse(data.Split('#')[0]);
+                    value = data.Substring(data.IndexOf('#') + 1);
+                    taskreminder.Add(key, DateTime.ParseExact(value, "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture));
+                }
+                #endregion
+
                 foreach (var taskid in tasknames.Keys)
                 {
                     Task t = new Task();
@@ -138,16 +170,18 @@ namespace ToDo_List.WorkWithDatabase
                     t.TaskName = tasknames[taskid];
                     if (taskdetail.ContainsKey(taskid))
                         t.TaskDetail = taskdetail[taskid];
+                    if (taskreminder.ContainsKey(taskid))
+                        t.TaskReminder = taskreminder[taskid];
                     t.TaskState = taskstate[taskid];
 
                     tasks.Add(t);
                 }
                 return tasks;
             }
-            catch
+            catch (Exception ex)
             {
-                removeempty();
-                return All_Tasks();
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return tasks;
             }
         }
 
@@ -183,8 +217,28 @@ namespace ToDo_List.WorkWithDatabase
                 }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public bool DeleteReminder(int taskid)
+        {
+            try
+            {
+                var datafile = File.ReadAllLines(dbpaths[4]).ToList();
+                var selecttask = datafile.Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
+                datafile.Remove(selecttask);
+                datafile.Sort();
+                datafile.RemoveAll(d => d == "");
+                File.WriteAllLines(dbpaths[4], datafile);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -202,12 +256,14 @@ namespace ToDo_List.WorkWithDatabase
                     if (selecttask != null)
                         readdatafile.Remove(selecttask);
                     readdatafile.Sort();
+                    readdatafile.RemoveAll(d => d == "");
                     File.WriteAllLines(path, readdatafile);
                 }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -222,6 +278,7 @@ namespace ToDo_List.WorkWithDatabase
                 readdatafile.Remove(selecttask);
                 readdatafile.Add($"{task.TaskID}#{task.TaskName}");
                 readdatafile.Sort();
+                readdatafile.RemoveAll(d => d == "");
                 File.WriteAllLines(dbpaths[1], readdatafile);
                 #endregion
 
@@ -233,14 +290,30 @@ namespace ToDo_List.WorkWithDatabase
                 if (task.TaskDetail.Count() != 0)
                     readdatafile.Add($"{task.TaskID}#{task.TaskDetail}");
                 readdatafile.Sort();
+                readdatafile.RemoveAll(d => d == "");
                 File.WriteAllLines(dbpaths[2], readdatafile);
                 #endregion
 
                 EditTaskState(task.TaskID, task.TaskState);
+
+                #region EditReminder
+                readdatafile = File.ReadAllLines(dbpaths[4]).ToList();
+                selecttask = readdatafile.Where(n => n.Contains($"{task.TaskID}#")).FirstOrDefault();
+                if (selecttask != null)
+                    readdatafile.Remove(selecttask);
+                if (task.TaskReminder != DateTime.MinValue)
+                    readdatafile.Add($"{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
+                readdatafile.Sort();
+                readdatafile.RemoveAll(d => d == "");
+                File.WriteAllLines(dbpaths[4], readdatafile);
+
+                #endregion
+
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -254,11 +327,13 @@ namespace ToDo_List.WorkWithDatabase
                 datafile.Remove(selecttask);
                 datafile.Add($"{taskid}#{changedstate}");
                 datafile.Sort();
+                datafile.RemoveAll(d => d == "");
                 File.WriteAllLines(dbpaths[3], datafile);
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -282,6 +357,11 @@ namespace ToDo_List.WorkWithDatabase
             {
                 t.TaskState = bool.Parse(select.Substring(select.IndexOf('#') + 1));
             }
+            select = File.ReadAllLines(dbpaths[4]).ToList().Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
+            if (select != null)
+            {
+                t.TaskReminder = DateTime.ParseExact(select.Substring(select.IndexOf('#') + 1), "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            }
 
             return t;
         }
@@ -298,15 +378,16 @@ namespace ToDo_List.WorkWithDatabase
                     }
                     Directory.Delete(dbpaths[0]);
                 }
-                    
+
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
-        void removeempty()
+        public void removeempty()
         {
             try
             {
@@ -319,9 +400,9 @@ namespace ToDo_List.WorkWithDatabase
                     File.WriteAllLines(path, datatoclean);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

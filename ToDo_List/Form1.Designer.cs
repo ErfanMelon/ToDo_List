@@ -28,26 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ucdatepicker1 = new ToDo_List.Utility.ucdatepicker();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // ucdatepicker1
+            // button1
             // 
-            this.ucdatepicker1.day = 0;
-            this.ucdatepicker1.Location = new System.Drawing.Point(22, 12);
-            this.ucdatepicker1.month = 4;
-            this.ucdatepicker1.Name = "ucdatepicker1";
-            this.ucdatepicker1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.ucdatepicker1.Size = new System.Drawing.Size(339, 286);
-            this.ucdatepicker1.TabIndex = 0;
-            this.ucdatepicker1.year = 1401;
+            this.button1.Location = new System.Drawing.Point(269, 88);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(136, 138);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.ucdatepicker1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -57,6 +68,7 @@
 
         #endregion
 
-        private Utility.ucdatepicker ucdatepicker1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

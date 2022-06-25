@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ToDo_List.Properties;
 using ToDo_List.WorkWithDatabase;
 
 namespace ToDo_List
@@ -112,6 +114,28 @@ namespace ToDo_List
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            string remind = Console.ReadLine();
+            if (remind != null)
+            {
+                SoundPlayer player = new SoundPlayer() { Stream = Resources.Alarm };
+                List<string> data = remind.Split('#').ToList();
+                player.Play();
+                //ID#TaskName#Date
+                if (MessageBox.Show($"Your task : {data[1]}\nDo you want to dismiss?", $"Alarm {data[1]}", MessageBoxButtons.YesNo)==DialogResult.Yes)
+                {
+                    c.DeleteReminder(int.Parse(data[0]));
+                }
+                Application.Exit();
+            }
+        }
+
+        private void btndebug_Click(object sender, EventArgs e)
+        {
+            c.removeempty();
         }
     }
 }

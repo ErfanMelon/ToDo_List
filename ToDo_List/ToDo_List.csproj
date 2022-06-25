@@ -79,6 +79,7 @@
     <Compile Include="Utility\customLabel.Designer.cs">
       <DependentUpon>customLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utility\Reminder.cs" />
     <Compile Include="Utility\ucdatepicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -154,6 +155,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="TaskScheduler">
+      <Guid>{E34CB9F1-C7F7-424C-BE29-027DCC09363A}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Alarm.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
