@@ -28,27 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.uccalender1 = new ToDo_List.Utility.uccalender();
+            this.ucdatepicker1 = new ToDo_List.Utility.ucdatepicker();
             this.SuspendLayout();
             // 
-            // uccalender1
+            // ucdatepicker1
             // 
-            this.uccalender1.Location = new System.Drawing.Point(12, 12);
-            this.uccalender1.month = 4;
-            this.uccalender1.Name = "uccalender1";
-            this.uccalender1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.uccalender1.shamsidate = null;
-            this.uccalender1.Size = new System.Drawing.Size(339, 274);
-            this.uccalender1.TabIndex = 0;
-            this.uccalender1.year = 0;
-            this.uccalender1.Load += new System.EventHandler(this.uccalender1_Load);
+            this.ucdatepicker1.day = 0;
+            this.ucdatepicker1.Location = new System.Drawing.Point(22, 12);
+            this.ucdatepicker1.month = 4;
+            this.ucdatepicker1.Name = "ucdatepicker1";
+            this.ucdatepicker1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.ucdatepicker1.Size = new System.Drawing.Size(339, 286);
+            this.ucdatepicker1.TabIndex = 0;
+            this.ucdatepicker1.year = 1401;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.uccalender1);
+            this.Controls.Add(this.ucdatepicker1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -58,6 +57,6 @@
 
         #endregion
 
-        private Utility.uccalender uccalender1;
+        private Utility.ucdatepicker ucdatepicker1;
     }
 }

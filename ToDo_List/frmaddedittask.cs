@@ -93,14 +93,26 @@ namespace ToDo_List
             }
         }
 
-        private void frmaddedittask_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void nishowresult_BalloonTipClosed(object sender, EventArgs e)
         {
             nishowresult.Visible = false;
+        }
+
+        private void cbreminder_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (cbreminder.CheckState)
+            {
+                case CheckState.Unchecked:
+                    label2.Enabled = label3.Enabled = label4.Enabled = txthour.Enabled = txtmin.Enabled=dtpreminder.Enabled = false;
+                    break;
+                case CheckState.Checked:
+                    label2.Enabled = label3.Enabled = label4.Enabled = txthour.Enabled = txtmin.Enabled = dtpreminder.Enabled = true;
+                    break;
+                case CheckState.Indeterminate:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,6 +73,12 @@
     <Compile Include="uctaskview.Designer.cs">
       <DependentUpon>uctaskview.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utility\customLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utility\customLabel.Designer.cs">
+      <DependentUpon>customLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utility\ucdatepicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -107,6 +114,9 @@
     </Compile>
     <EmbeddedResource Include="uctaskview.resx">
       <DependentUpon>uctaskview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utility\customLabel.resx">
+      <DependentUpon>customLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utility\ucdatepicker.resx">
       <DependentUpon>ucdatepicker.cs</DependentUpon>
