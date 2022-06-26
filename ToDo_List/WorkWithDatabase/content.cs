@@ -89,7 +89,7 @@ namespace ToDo_List.WorkWithDatabase
                     }
                     Reminder r = new Reminder();
                     r.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
-                    
+
                 }
                 #endregion
 
@@ -135,6 +135,7 @@ namespace ToDo_List.WorkWithDatabase
 
                 #region ReadDetails
                 file = File.ReadAllLines(dbpaths[2]).ToList();
+                file.RemoveAll(n => n == "");
                 foreach (string data in file)
                 {
                     key = int.Parse(data.Split('#')[0]);
@@ -145,6 +146,7 @@ namespace ToDo_List.WorkWithDatabase
 
                 #region ReadStates
                 file = File.ReadAllLines(dbpaths[3]).ToList();
+                file.RemoveAll(n => n == "");
                 foreach (string data in file)
                 {
                     key = int.Parse(data.Split('#')[0]);
@@ -155,6 +157,7 @@ namespace ToDo_List.WorkWithDatabase
 
                 #region ReadReminders
                 file = File.ReadAllLines(dbpaths[4]).ToList();
+                file.RemoveAll(n => n == "");
                 foreach (string data in file)
                 {
                     key = int.Parse(data.Split('#')[0]);
@@ -311,13 +314,15 @@ namespace ToDo_List.WorkWithDatabase
                 if (selecttask != null)
                     readdatafile.Remove(selecttask);
                 if (task.TaskReminder != DateTime.MinValue)
+                {
                     readdatafile.Add($"{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
+                    Reminder r = new Reminder();
+                    r.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
+                }
                 readdatafile.Sort();
                 readdatafile.RemoveAll(d => d == "");
                 File.WriteAllLines(dbpaths[4], readdatafile);
 
-                Reminder r = new Reminder();
-                r.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
                 #endregion
 
                 return true;
@@ -383,11 +388,14 @@ namespace ToDo_List.WorkWithDatabase
             {
                 if (Directory.Exists(dbpaths[0]))
                 {
-                    foreach (string file in Directory.GetFiles(dbpaths[0]))
-                    {
-                        File.Delete(file);
-                    }
-                    Directory.Delete(dbpaths[0]);
+                    Reminder r = new Reminder();
+                    var checkfordeletereminder = new FileInfo(dbpaths[4]);
+                    if (checkfordeletereminder.Exists && checkfordeletereminder.Length!=0)
+                        foreach (string remind in File.ReadAllLines(dbpaths[4]).ToList())
+                        {
+                            r.DeleteTask($"Task_{remind.Split('#').ToList()[0]}");
+                        }
+                    deletedb(dbpaths[0]);
                 }
 
                 return true;
@@ -397,6 +405,18 @@ namespace ToDo_List.WorkWithDatabase
                 MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+        }
+        void deletedb(string dirpath)
+        {
+            foreach (string file in Directory.GetFiles(dirpath))
+            {
+                File.Delete(file);
+            }
+            foreach (string dir in Directory.GetDirectories(dirpath))
+            {
+                deletedb(dir);
+            }
+            Directory.Delete(dirpath);
         }
         public void removeempty()
         {

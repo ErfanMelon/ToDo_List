@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ToDo_List.Properties;
 using ToDo_List.WorkWithDatabase;
@@ -78,10 +71,6 @@ namespace ToDo_List
             }
         }
 
-        private void btnalltasks_ContextMenuStripChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void btndeletedb_Click(object sender, EventArgs e)
         {
@@ -92,6 +81,7 @@ namespace ToDo_List
                 if (c.RemoveDB())
                 {
                     nideletedbmessege.BalloonTipText = "تمامی داده ها پاک شد";
+                    currentbutton.PerformClick();
                 }
                 else
                 {
@@ -106,15 +96,6 @@ namespace ToDo_List
             nideletedbmessege.Visible = false;
         }
 
-        private void btnsetting_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -124,13 +105,13 @@ namespace ToDo_List
                 SoundPlayer player = new SoundPlayer() { Stream = Resources.Alarm };
                 player.Play();
                 //ID#TaskName#Date
-                if (MessageBox.Show($"Your task : {args[2]}\nDo you want to dismiss?", $"Alarm {args[2]}", MessageBoxButtons.YesNo)==DialogResult.Yes)
+                if (MessageBox.Show($"Your task : {args[2]}\nDo you want to dismiss?", $"Alarm {args[2]}", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     c.DeleteReminder(int.Parse(args[1]));
                 }
                 else
                 {
-                    
+                    //remind later code
                 }
                 Application.Exit();
             }

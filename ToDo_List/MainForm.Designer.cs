@@ -34,6 +34,7 @@
             this.btnaddnewtask = new System.Windows.Forms.ToolStripButton();
             this.btnsetting = new System.Windows.Forms.ToolStripDropDownButton();
             this.btndeletedb = new System.Windows.Forms.ToolStripMenuItem();
+            this.btndebug = new System.Windows.Forms.ToolStripMenuItem();
             this.gbcategories = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btndidnt = new System.Windows.Forms.Button();
@@ -41,7 +42,6 @@
             this.btnalltasks = new System.Windows.Forms.Button();
             this.pltasks = new System.Windows.Forms.Panel();
             this.nideletedbmessege = new System.Windows.Forms.NotifyIcon(this.components);
-            this.btndebug = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.gbcategories.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -79,7 +79,6 @@
             this.btnsetting.Size = new System.Drawing.Size(63, 35);
             this.btnsetting.Text = "تنظیمات";
             this.btnsetting.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnsetting.Click += new System.EventHandler(this.btnsetting_Click);
             // 
             // btndeletedb
             // 
@@ -87,6 +86,13 @@
             this.btndeletedb.Size = new System.Drawing.Size(180, 22);
             this.btndeletedb.Text = "حذف داده ها";
             this.btndeletedb.Click += new System.EventHandler(this.btndeletedb_Click);
+            // 
+            // btndebug
+            // 
+            this.btndebug.Name = "btndebug";
+            this.btndebug.Size = new System.Drawing.Size(180, 22);
+            this.btndebug.Text = "رفع خطا";
+            this.btndebug.Click += new System.EventHandler(this.btndebug_Click);
             // 
             // gbcategories
             // 
@@ -111,7 +117,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // btndidnt
             // 
@@ -141,7 +146,6 @@
             this.btnalltasks.TabIndex = 0;
             this.btnalltasks.Text = "همه وظایف";
             this.btnalltasks.UseVisualStyleBackColor = true;
-            this.btnalltasks.ContextMenuStripChanged += new System.EventHandler(this.btnalltasks_ContextMenuStripChanged);
             this.btnalltasks.Click += new System.EventHandler(this.btnalltasks_Click);
             // 
             // pltasks
@@ -159,13 +163,6 @@
             this.nideletedbmessege.Icon = ((System.Drawing.Icon)(resources.GetObject("nideletedbmessege.Icon")));
             this.nideletedbmessege.Text = "Delete";
             this.nideletedbmessege.BalloonTipClosed += new System.EventHandler(this.nideletedbmessege_BalloonTipClosed);
-            // 
-            // btndebug
-            // 
-            this.btndebug.Name = "btndebug";
-            this.btndebug.Size = new System.Drawing.Size(180, 22);
-            this.btndebug.Text = "رفع خطا";
-            this.btndebug.Click += new System.EventHandler(this.btndebug_Click);
             // 
             // MainForm
             // 
