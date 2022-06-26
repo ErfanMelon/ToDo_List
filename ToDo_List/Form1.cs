@@ -16,6 +16,7 @@ namespace ToDo_List
 {
     public partial class Form1 : Form
     {
+        string[] arg;
         public Form1()
         {
             InitializeComponent();
@@ -25,13 +26,12 @@ namespace ToDo_List
         {
             //    var d=DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             //    var s = DateTime.ParseExact(d, "dd-MM-yyyy HH:mm:ss",CultureInfo.InvariantCulture);
-            
-            string x = Console.ReadLine();
-            
-            
-            if(x!=null)
+
+            string[] args = Environment.GetCommandLineArgs();
+            arg = args;
+            if(args.Length!=1)
             {
-                
+                MessageBox.Show($"{args[1]}");
             }
                 
 
@@ -44,6 +44,8 @@ namespace ToDo_List
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Utility.Reminder r = new Utility.Reminder();
+            r.CreateTask("Tk248483", "Erfan", "des", DateTime.Now, "id1", "2022-06-26T11:41:00", "2022-06-26T11:42:00", "aid", arg[0], "Hello now");
         }
 
         private void button2_Click(object sender, EventArgs e)

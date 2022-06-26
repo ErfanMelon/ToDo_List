@@ -118,16 +118,19 @@ namespace ToDo_List
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            string remind = Console.ReadLine();
-            if (remind != null)
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length != 1)
             {
                 SoundPlayer player = new SoundPlayer() { Stream = Resources.Alarm };
-                List<string> data = remind.Split('#').ToList();
                 player.Play();
                 //ID#TaskName#Date
-                if (MessageBox.Show($"Your task : {data[1]}\nDo you want to dismiss?", $"Alarm {data[1]}", MessageBoxButtons.YesNo)==DialogResult.Yes)
+                if (MessageBox.Show($"Your task : {args[2]}\nDo you want to dismiss?", $"Alarm {args[2]}", MessageBoxButtons.YesNo)==DialogResult.Yes)
                 {
-                    c.DeleteReminder(int.Parse(data[0]));
+                    c.DeleteReminder(int.Parse(args[1]));
+                }
+                else
+                {
+                    
                 }
                 Application.Exit();
             }

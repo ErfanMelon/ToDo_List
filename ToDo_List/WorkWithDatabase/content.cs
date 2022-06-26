@@ -87,12 +87,12 @@ namespace ToDo_List.WorkWithDatabase
                     {
                         File.AppendAllText(filesizes[3].FullName, $"\n{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
                     }
-
-                    #endregion
-
-
+                    Reminder r = new Reminder();
+                    r.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
                     
                 }
+                #endregion
+
                 return true;
             }
             catch (Exception ex)
@@ -234,6 +234,9 @@ namespace ToDo_List.WorkWithDatabase
                 datafile.Sort();
                 datafile.RemoveAll(d => d == "");
                 File.WriteAllLines(dbpaths[4], datafile);
+
+                Reminder r = new Reminder();
+                r.DeleteTask($"Task_{taskid}");
                 return true;
             }
             catch (Exception ex)
@@ -247,6 +250,12 @@ namespace ToDo_List.WorkWithDatabase
         {
             try
             {
+                //Delete TaskReminder if exist
+                Reminder r = new Reminder();
+                if (FindTaskByID(taskid).TaskReminder != DateTime.MinValue)
+                    r.DeleteTask($"Task_{taskid}");
+
+                //delete task from files
                 foreach (string path in dbpaths)
                 {
                     if (path == dbpaths[0])
@@ -256,7 +265,7 @@ namespace ToDo_List.WorkWithDatabase
                     if (selecttask != null)
                         readdatafile.Remove(selecttask);
                     readdatafile.Sort();
-                    readdatafile.RemoveAll(d => d == "");
+                    readdatafile.RemoveAll(d => d == "");//remove whitespaces from file
                     File.WriteAllLines(path, readdatafile);
                 }
                 return true;
@@ -307,6 +316,8 @@ namespace ToDo_List.WorkWithDatabase
                 readdatafile.RemoveAll(d => d == "");
                 File.WriteAllLines(dbpaths[4], readdatafile);
 
+                Reminder r = new Reminder();
+                r.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
                 #endregion
 
                 return true;

@@ -19,7 +19,7 @@ namespace ToDo_List.Utility
         IExecAction objAction;
 
 
-        public void CreateTask(string taskname,string author,string description,DateTime dtregistertime,string triggerid,string startboundary,string endboundary,string actionid,string path,string arg)
+        public void CreateTask(string taskname, string author, string description, DateTime dtregistertime, string triggerid, string startboundary, string endboundary, string actionid, string path, string arg)
         {
             try
             {
@@ -27,11 +27,11 @@ namespace ToDo_List.Utility
                 objScheduler.Connect();
 
                 //Setting Task Definition
-                SetTaskDefinition(author,description,dtregistertime);
+                SetTaskDefinition(author, description, dtregistertime);
                 //Setting Task Trigger Information
-                SetTriggerInfo(triggerid,startboundary,endboundary);
+                SetTriggerInfo(triggerid, startboundary, endboundary);
                 //Setting Task Action Information
-                SetActionInfo(actionid,path,arg);
+                SetActionInfo(actionid, path, arg);
 
                 //Getting the roort folder
                 ITaskFolder root = objScheduler.GetFolder("\\");
@@ -39,9 +39,9 @@ namespace ToDo_List.Utility
                 IRegisteredTask regTask = root.RegisterTaskDefinition(taskname, objTaskDef, (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null, _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
 
                 //To execute the task immediately calling Run()
-                IRunningTask runtask = regTask.Run(null);
+                //IRunningTask runtask = regTask.Run(null);
 
-                MessageBox.Show("Task is created successfully");
+                // MessageBox.Show("Task is created successfully");
             }
             catch (Exception ex)
             {
@@ -50,7 +50,7 @@ namespace ToDo_List.Utility
         }
 
         //Setting Task Definition
-        private void SetTaskDefinition(string author,string description,DateTime registerinfodate)
+        private void SetTaskDefinition(string author, string description, DateTime registerinfodate)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace ToDo_List.Utility
         }
 
         //Setting Task Trigger Information
-        private void SetTriggerInfo(string triggerid,string startboundary,string endboundary)
+        private void SetTriggerInfo(string triggerid, string startboundary, string endboundary)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace ToDo_List.Utility
         }
 
         //Setting Task Action Information
-        private void SetActionInfo(string actionid,string path,string arg)
+        private void SetActionInfo(string actionid, string path, string arg)
         {
             try
             {
@@ -133,7 +133,7 @@ namespace ToDo_List.Utility
                 ITaskFolder containingFolder = objScheduler.GetFolder("\\");
                 //Deleting the task
                 containingFolder.DeleteTask(taskname, 0);  //Give name of the Task
-                MessageBox.Show("Task deleted...");
+                //MessageBox.Show("Task deleted...");
             }
             catch (Exception ex)
             {
@@ -141,5 +141,5 @@ namespace ToDo_List.Utility
             }
         }
     }
-    
+
 }
