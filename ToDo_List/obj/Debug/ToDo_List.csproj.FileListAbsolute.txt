@@ -10,7 +10,6 @@ C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.MainForm.res
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.frmaddedittask.resources
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.uctaskview.resources
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.Utility.uccalender.resources
-C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.Form1.resources
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.Utility.customLabel.resources
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.Utility.ucdatepicker.resources
 C:\Users\Vatar\source\repos\ToDo_List\ToDo_List\obj\Debug\ToDo_List.csprojAssemblyReference.cache

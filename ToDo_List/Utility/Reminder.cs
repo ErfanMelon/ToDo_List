@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskScheduler;
 
 namespace ToDo_List.Utility
 {
-    class Reminder
+    static class Reminder
     {
-        TaskScheduler.TaskScheduler objScheduler;
+        static TaskScheduler.TaskScheduler objScheduler;
+
         //To hold Task Definition
-        ITaskDefinition objTaskDef;
+        static ITaskDefinition objTaskDef;
+
         //To hold Trigger Information
-        ITimeTrigger objTrigger;
+        static ITimeTrigger objTrigger;
+
         //To hold Action Information
-        IExecAction objAction;
+        static IExecAction objAction;
 
 
-        public void CreateTask(string taskname, string author, string description, DateTime dtregistertime, string triggerid, string startboundary, string endboundary, string actionid, string path, string arg)
+        public static void CreateTask(string taskname, string author, string description, DateTime dtregistertime, string triggerid, string startboundary, string endboundary, string actionid, string path, string arg)
         {
             try
             {
@@ -50,7 +49,7 @@ namespace ToDo_List.Utility
         }
 
         //Setting Task Definition
-        private void SetTaskDefinition(string author, string description, DateTime registerinfodate)
+        private static void SetTaskDefinition(string author, string description, DateTime registerinfodate)
         {
             try
             {
@@ -83,7 +82,7 @@ namespace ToDo_List.Utility
         }
 
         //Setting Task Trigger Information
-        private void SetTriggerInfo(string triggerid, string startboundary, string endboundary)
+        private static void SetTriggerInfo(string triggerid, string startboundary, string endboundary)
         {
             try
             {
@@ -105,7 +104,7 @@ namespace ToDo_List.Utility
         }
 
         //Setting Task Action Information
-        private void SetActionInfo(string actionid, string path, string arg)
+        private static void SetActionInfo(string actionid, string path, string arg)
         {
             try
             {
@@ -123,7 +122,7 @@ namespace ToDo_List.Utility
             }
         }
 
-        public void DeleteTask(string taskname)
+        public static void DeleteTask(string taskname)
         {
             try
             {

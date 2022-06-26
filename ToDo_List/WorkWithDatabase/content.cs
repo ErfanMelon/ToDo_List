@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ToDo_List.Utility;
 
@@ -25,13 +23,7 @@ namespace ToDo_List.WorkWithDatabase
         {
             if (!CreateDB())
                 return false;
-            List<FileInfo> filesizes = new List<FileInfo>();
-            foreach (string path in dbpaths)
-            {
-                if (path == dbpaths[0])
-                    continue;
-                filesizes.Add(new FileInfo(path));
-            }
+
             /*Data Be Like -> 
              * [TNames] TaskID#TaskName
              * [TDetails] TaskID#TaskDetail
@@ -42,56 +34,27 @@ namespace ToDo_List.WorkWithDatabase
             {
                 task.TaskID = int.Parse(File.ReadAllText(dbpaths[0] + "\\id"));//read unused id from db
                 File.WriteAllText(dbpaths[0] + "\\id", (task.TaskID + 1).ToString());//change unused id [increase by 1]
+
                 #region InsertName
-                if (filesizes[0].Length == 0)
-                {
-                    File.WriteAllText(filesizes[0].FullName, $"{task.TaskID}#{task.TaskName}");
-                }
-                else
-                {
-                    File.AppendAllText(filesizes[0].FullName, $"\n{task.TaskID}#{task.TaskName}");
-                }
+                File.AppendAllText(dbpaths[1], $"\n{task.TaskID}#{task.TaskName}");
                 #endregion
 
                 #region InsertDetail
                 if (task.TaskDetail.Length != 0)
-                    if (filesizes[1].Length == 0)
-                    {
-                        File.WriteAllText(filesizes[1].FullName, $"{task.TaskID}#{task.TaskDetail}");
-                    }
-                    else
-                    {
-                        File.AppendAllText(filesizes[1].FullName, $"\n{task.TaskID}#{task.TaskDetail}");
-                    }
+                    File.AppendAllText(dbpaths[2], $"\n{task.TaskID}#{task.TaskDetail}");
                 #endregion//if not empty
 
                 #region InsertState
-                if (filesizes[2].Length == 0)
-                {
-                    File.WriteAllText(filesizes[2].FullName, $"{task.TaskID}#{task.TaskState}");
-                }
-                else
-                {
-                    File.AppendAllText(filesizes[2].FullName, $"\n{task.TaskID}#{task.TaskState}");
-                }
+                File.AppendAllText(dbpaths[3], $"\n{task.TaskID}#{task.TaskState}");
                 #endregion
 
                 #region InsertReminder
                 if (task.TaskReminder != DateTime.MinValue)
                 {
-                    if (filesizes[3].Length == 0)
-                    {
-                        File.WriteAllText(filesizes[3].FullName, $"{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
-                    }
-                    else
-                    {
-                        File.AppendAllText(filesizes[3].FullName, $"\n{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
-                    }
-                    Reminder r = new Reminder();
-                    r.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
-
+                    File.AppendAllText(dbpaths[4], $"\n{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
+                    Reminder.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
                 }
-                #endregion
+                #endregion// if not mindatetime
 
                 return true;
             }
@@ -101,7 +64,6 @@ namespace ToDo_List.WorkWithDatabase
                 return false;
             }
         }
-
         public List<Task> All_Tasks()
         {
             List<Task> tasks = new List<Task>();
@@ -112,58 +74,26 @@ namespace ToDo_List.WorkWithDatabase
                     return tasks;
 
                 #region Containers
-                Dictionary<int, string> tasknames = new Dictionary<int, string>();
-                Dictionary<int, string> taskdetail = new Dictionary<int, string>();
-                Dictionary<int, bool> taskstate = new Dictionary<int, bool>();
-                Dictionary<int, DateTime> taskreminder = new Dictionary<int, DateTime>();
-
-                List<string> file;
-                int key;
-                string value;
+                Dictionary<int, dynamic> tasknames = new Dictionary<int, dynamic>();
+                Dictionary<int, dynamic> taskdetail = new Dictionary<int, dynamic>();
+                Dictionary<int, dynamic> taskstate = new Dictionary<int, dynamic>();
+                Dictionary<int, dynamic> taskreminder = new Dictionary<int, dynamic>();
                 #endregion
 
                 #region ReadNames
-                file = File.ReadAllLines(dbpaths[1]).ToList();
-                file.RemoveAll(n => n == "");
-                foreach (string data in file)
-                {
-                    key = int.Parse(data.Split('#')[0]);
-                    value = data.Substring(data.IndexOf('#') + 1);
-                    tasknames.Add(key, value);
-                }
+                tasknames = Getdata<string>(dbpaths[1]);
                 #endregion
 
                 #region ReadDetails
-                file = File.ReadAllLines(dbpaths[2]).ToList();
-                file.RemoveAll(n => n == "");
-                foreach (string data in file)
-                {
-                    key = int.Parse(data.Split('#')[0]);
-                    value = data.Substring(data.IndexOf('#') + 1);
-                    taskdetail.Add(key, value);
-                }
+                taskdetail = Getdata<string>(dbpaths[2]);
                 #endregion
 
                 #region ReadStates
-                file = File.ReadAllLines(dbpaths[3]).ToList();
-                file.RemoveAll(n => n == "");
-                foreach (string data in file)
-                {
-                    key = int.Parse(data.Split('#')[0]);
-                    value = data.Substring(data.IndexOf('#') + 1);
-                    taskstate.Add(key, bool.Parse(value));
-                }
+                taskstate = Getdata<bool>(dbpaths[3]);
                 #endregion
 
                 #region ReadReminders
-                file = File.ReadAllLines(dbpaths[4]).ToList();
-                file.RemoveAll(n => n == "");
-                foreach (string data in file)
-                {
-                    key = int.Parse(data.Split('#')[0]);
-                    value = data.Substring(data.IndexOf('#') + 1);
-                    taskreminder.Add(key, DateTime.ParseExact(value, "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture));
-                }
+                taskreminder = Getdata<DateTime>(dbpaths[4]);
                 #endregion
 
                 foreach (var taskid in tasknames.Keys)
@@ -176,7 +106,6 @@ namespace ToDo_List.WorkWithDatabase
                     if (taskreminder.ContainsKey(taskid))
                         t.TaskReminder = taskreminder[taskid];
                     t.TaskState = taskstate[taskid];
-
                     tasks.Add(t);
                 }
                 return tasks;
@@ -187,7 +116,6 @@ namespace ToDo_List.WorkWithDatabase
                 return tasks;
             }
         }
-
         public bool CreateDB()
         {
             try
@@ -226,7 +154,6 @@ namespace ToDo_List.WorkWithDatabase
                 return false;
             }
         }
-
         public bool DeleteReminder(int taskid)
         {
             try
@@ -238,8 +165,7 @@ namespace ToDo_List.WorkWithDatabase
                 datafile.RemoveAll(d => d == "");
                 File.WriteAllLines(dbpaths[4], datafile);
 
-                Reminder r = new Reminder();
-                r.DeleteTask($"Task_{taskid}");
+                Reminder.DeleteTask($"Task_{taskid}");
                 return true;
             }
             catch (Exception ex)
@@ -248,15 +174,13 @@ namespace ToDo_List.WorkWithDatabase
                 return false;
             }
         }
-
         public bool DeleteTask(int taskid)
         {
             try
             {
                 //Delete TaskReminder if exist
-                Reminder r = new Reminder();
                 if (FindTaskByID(taskid).TaskReminder != DateTime.MinValue)
-                    r.DeleteTask($"Task_{taskid}");
+                    Reminder.DeleteTask($"Task_{taskid}");
 
                 //delete task from files
                 foreach (string path in dbpaths)
@@ -279,50 +203,28 @@ namespace ToDo_List.WorkWithDatabase
                 return false;
             }
         }
-
         public bool EditTask(Task task)
         {
             try
             {
                 #region EditName
-                var readdatafile = File.ReadAllLines(dbpaths[1]).ToList();
-                var selecttask = readdatafile.Where(n => n.Contains($"{task.TaskID}#")).FirstOrDefault();
-                readdatafile.Remove(selecttask);
-                readdatafile.Add($"{task.TaskID}#{task.TaskName}");
-                readdatafile.Sort();
-                readdatafile.RemoveAll(d => d == "");
-                File.WriteAllLines(dbpaths[1], readdatafile);
+                Edit(dbpaths[1], task.TaskID, task.TaskName);
                 #endregion
 
                 #region EditDetail
-                readdatafile = File.ReadAllLines(dbpaths[2]).ToList();
-                selecttask = readdatafile.Where(n => n.Contains($"{task.TaskID}#")).FirstOrDefault();
-                if (selecttask != null)
-                    readdatafile.Remove(selecttask);
-                if (task.TaskDetail.Count() != 0)
-                    readdatafile.Add($"{task.TaskID}#{task.TaskDetail}");
-                readdatafile.Sort();
-                readdatafile.RemoveAll(d => d == "");
-                File.WriteAllLines(dbpaths[2], readdatafile);
+                Edit(dbpaths[2], task.TaskID, task.TaskDetail);
                 #endregion
 
                 EditTaskState(task.TaskID, task.TaskState);
 
                 #region EditReminder
-                readdatafile = File.ReadAllLines(dbpaths[4]).ToList();
-                selecttask = readdatafile.Where(n => n.Contains($"{task.TaskID}#")).FirstOrDefault();
-                if (selecttask != null)
-                    readdatafile.Remove(selecttask);
-                if (task.TaskReminder != DateTime.MinValue)
+                if (task.TaskReminder == DateTime.MinValue)
+                    Edit(dbpaths[4], task.TaskID, "");
+                else
                 {
-                    readdatafile.Add($"{task.TaskID}#{task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
-                    Reminder r = new Reminder();
-                    r.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
+                    Edit(dbpaths[4], task.TaskID, task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss"));
+                    Reminder.CreateTask("Task_" + task.TaskID, "TodoList", task.TaskDetail, DateTime.Now, "task" + task.TaskID, task.TaskReminder.ToString("yyyy-MM-ddTHH:mm:ss"), task.TaskReminder.AddDays(2).ToString("yyyy-MM-ddTHH:mm:ss"), "t" + task.TaskID, Application.StartupPath + "\\ToDo_List.exe", $"{task.TaskID} {task.TaskName} {task.TaskReminder.ToString("dd-MM-yyyy HH:mm:ss")}");
                 }
-                readdatafile.Sort();
-                readdatafile.RemoveAll(d => d == "");
-                File.WriteAllLines(dbpaths[4], readdatafile);
-
                 #endregion
 
                 return true;
@@ -333,18 +235,11 @@ namespace ToDo_List.WorkWithDatabase
                 return false;
             }
         }
-
         public bool EditTaskState(int taskid, bool changedstate)
         {
             try
             {
-                var datafile = File.ReadAllLines(dbpaths[3]).ToList();
-                var selecttask = datafile.Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
-                datafile.Remove(selecttask);
-                datafile.Add($"{taskid}#{changedstate}");
-                datafile.Sort();
-                datafile.RemoveAll(d => d == "");
-                File.WriteAllLines(dbpaths[3], datafile);
+                Edit(dbpaths[3], taskid, changedstate.ToString());
                 return true;
             }
             catch (Exception ex)
@@ -353,49 +248,35 @@ namespace ToDo_List.WorkWithDatabase
                 return false;
             }
         }
-
         public Task FindTaskByID(int taskid)
         {
             Task t = new Task() { TaskID = taskid };
 
-            var select = File.ReadAllLines(dbpaths[1]).ToList().Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
-            if (select != null)
-            {
-                t.TaskName = select.Substring(select.IndexOf('#') + 1);
-            }
-            select = File.ReadAllLines(dbpaths[2]).ToList().Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
-            if (select != null)
-            {
-                t.TaskDetail = select.Substring(select.IndexOf('#') + 1);
-            }
-            select = File.ReadAllLines(dbpaths[3]).ToList().Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
-            if (select != null)
-            {
-                t.TaskState = bool.Parse(select.Substring(select.IndexOf('#') + 1));
-            }
-            select = File.ReadAllLines(dbpaths[4]).ToList().Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
-            if (select != null)
-            {
-                t.TaskReminder = DateTime.ParseExact(select.Substring(select.IndexOf('#') + 1), "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            }
+            t.TaskName = Find(dbpaths[1], taskid);
+
+            t.TaskDetail = Find(dbpaths[2], taskid);
+
+            bool.TryParse(Find(dbpaths[3], taskid), out bool b);
+            t.TaskState = b;
+            DateTime.TryParseExact(Find(dbpaths[4], taskid), "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime d);
+            t.TaskReminder = d;
 
             return t;
         }
-
         public bool RemoveDB()
         {
             try
             {
                 if (Directory.Exists(dbpaths[0]))
                 {
-                    Reminder r = new Reminder();
+
                     var checkfordeletereminder = new FileInfo(dbpaths[4]);
-                    if (checkfordeletereminder.Exists && checkfordeletereminder.Length!=0)
+                    if (checkfordeletereminder.Exists && checkfordeletereminder.Length != 0)
                         foreach (string remind in File.ReadAllLines(dbpaths[4]).ToList())
                         {
-                            r.DeleteTask($"Task_{remind.Split('#').ToList()[0]}");
+                            Reminder.DeleteTask($"Task_{remind.Split('#').ToList()[0]}");
                         }
-                    deletedb(dbpaths[0]);
+                    deletefilefolder(dbpaths[0]);
                 }
 
                 return true;
@@ -406,7 +287,7 @@ namespace ToDo_List.WorkWithDatabase
                 return false;
             }
         }
-        void deletedb(string dirpath)
+        void deletefilefolder(string dirpath)
         {
             foreach (string file in Directory.GetFiles(dirpath))
             {
@@ -414,7 +295,7 @@ namespace ToDo_List.WorkWithDatabase
             }
             foreach (string dir in Directory.GetDirectories(dirpath))
             {
-                deletedb(dir);
+                deletefilefolder(dir);
             }
             Directory.Delete(dirpath);
         }
@@ -435,6 +316,57 @@ namespace ToDo_List.WorkWithDatabase
             {
                 MessageBox.Show($"ErrorInfo:\n{ex.Message}", "ProgramError", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void Edit(string filepath, int taskid, string value)
+        {
+            List<string> readdatafile = File.ReadAllLines(filepath).ToList();
+            readdatafile.RemoveAll(d => d == "");
+            string selecttask = readdatafile.Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
+            if (selecttask != null)
+                readdatafile.Remove(selecttask);
+            if (value != "")
+                readdatafile.Add($"{taskid}#{value}");
+            readdatafile.Sort();
+            readdatafile.RemoveAll(d => d == "");
+            File.WriteAllLines(filepath, readdatafile);
+        }
+        private string Find(string filepath, int taskid)
+        {
+            string select = File.ReadAllLines(filepath).ToList().Where(n => n.Contains($"{taskid}#")).FirstOrDefault();
+            if (select != null)
+            {
+                return select.Substring(select.IndexOf('#') + 1);
+            }
+            return null;
+        }
+        private Dictionary<int, dynamic> Getdata<T>(string path)
+        {
+            Dictionary<int, dynamic> keyValuePairs = new Dictionary<int, dynamic>();
+            List<string> file = File.ReadAllLines(path).ToList();
+            file.RemoveAll(n => n == "");
+
+            int key;
+            string value;
+
+            //Collect Datetime
+            if (typeof(T) == typeof(DateTime))
+            {
+                foreach (string data in file)
+                {
+                    key = int.Parse(data.Split('#')[0]);
+                    value = data.Substring(data.IndexOf('#') + 1);
+                    keyValuePairs.Add(key, DateTime.ParseExact(value, "dd-MM-yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture));
+                }
+                return keyValuePairs;
+            }
+            //Collect Another data
+            foreach (string data in file)
+            {
+                key = int.Parse(data.Split('#')[0]);
+                value = data.Substring(data.IndexOf('#') + 1);
+                keyValuePairs.Add(key, Convert.ChangeType(value, typeof(T)));
+            }
+            return keyValuePairs;
         }
     }
 }

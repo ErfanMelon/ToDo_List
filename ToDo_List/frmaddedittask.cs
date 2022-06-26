@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ToDo_List.Properties;
-using ToDo_List.Utility;
 using ToDo_List.WorkWithDatabase;
 
 namespace ToDo_List
@@ -36,7 +28,7 @@ namespace ToDo_List
                     this.Icon = Resources.addnote;
                     txthour.Value = DateTime.Now.Hour;
                     txtmin.Value = DateTime.Now.Minute;
-                    
+
                     break;
                 case Mode.Edit:
                     this.Text = "ویرایش";
@@ -46,7 +38,7 @@ namespace ToDo_List
                     txttaskname.Text = task.TaskName;
                     txtdetail.Text = task.TaskDetail;
                     cbstate.Checked = task.TaskState;
-                    
+
                     if (task.TaskReminder != DateTime.MinValue)
                     {
                         txthour.Value = task.TaskReminder.Hour;
@@ -54,7 +46,7 @@ namespace ToDo_List
                         dtpreminder.Showdate(task.TaskReminder);
                         cbreminder.Checked = true;
                     }
-                        
+
                     break;
                 default:
                     break;
@@ -95,14 +87,14 @@ namespace ToDo_List
             DateTime dt = DateTime.MinValue;
             if (cbreminder.CheckState == CheckState.Checked)
             {
-                dt = new DateTime(dtpreminder.Date.Year,dtpreminder.Date.Month,dtpreminder.Date.Day,int.Parse(txthour.Value.ToString()),int.Parse(txtmin.Value.ToString()),0);
+                dt = new DateTime(dtpreminder.Date.Year, dtpreminder.Date.Month, dtpreminder.Date.Day, int.Parse(txthour.Value.ToString()), int.Parse(txtmin.Value.ToString()), 0);
             }
             nishowresult.Visible = true;
             switch (mod)
             {
                 case Mode.Add:
                     nishowresult.Icon = Resources.addnote;
-                    bool addtask = c.AddTask(new WorkWithDatabase.Task() { TaskName = txttaskname.Text.Trim(), TaskState = cbstate.Checked, TaskDetail = txtdetail.Text.Trim(), TaskReminder=dt });
+                    bool addtask = c.AddTask(new WorkWithDatabase.Task() { TaskName = txttaskname.Text.Trim(), TaskState = cbstate.Checked, TaskDetail = txtdetail.Text.Trim(), TaskReminder = dt });
                     if (addtask)
                     {
                         nishowresult.BalloonTipText = "عملیات با موفقیت انجام شد";
@@ -116,7 +108,7 @@ namespace ToDo_List
 
                 case Mode.Edit:
                     nishowresult.Icon = Resources.editicon;
-                    bool edittask = c.EditTask(new WorkWithDatabase.Task() { TaskID = task.TaskID, TaskDetail = txtdetail.Text.Trim(), TaskName = txttaskname.Text.Trim(), TaskState = cbstate.Checked,TaskReminder=dt });
+                    bool edittask = c.EditTask(new WorkWithDatabase.Task() { TaskID = task.TaskID, TaskDetail = txtdetail.Text.Trim(), TaskName = txttaskname.Text.Trim(), TaskState = cbstate.Checked, TaskReminder = dt });
                     if (edittask)
                     {
                         nishowresult.BalloonTipText = "عملیات با موفقیت انجام شد";

@@ -50,12 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmaddedittask.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,17 +83,8 @@
     <Compile Include="Utility\ucdatepicker.Designer.cs">
       <DependentUpon>ucdatepicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utility\uccalender.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Utility\uccalender.Designer.cs">
-      <DependentUpon>uccalender.cs</DependentUpon>
-    </Compile>
     <Compile Include="WorkWithDatabase\content.cs" />
     <Compile Include="WorkWithDatabase\IRepository.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmaddedittask.resx">
       <DependentUpon>frmaddedittask.cs</DependentUpon>
     </EmbeddedResource>
@@ -124,9 +109,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Utility\ucdatepicker.resx">
       <DependentUpon>ucdatepicker.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Utility\uccalender.resx">
-      <DependentUpon>uccalender.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
